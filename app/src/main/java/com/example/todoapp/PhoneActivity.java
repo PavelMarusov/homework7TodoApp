@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -25,18 +27,22 @@ import java.util.concurrent.TimeUnit;
 
 public class PhoneActivity extends AppCompatActivity {
 
-//    TODO Протестить все
+ProgressBar progressBar;
     EditText phoneEdit, editCode;
     Button phoneBtn;
     PhoneAuthProvider.ForceResendingToken token;
     String sentCode;
     PhoneAuthProvider.OnVerificationStateChangedCallbacks callbacks;
-
+LinearLayout phoneLinear,codeLinear;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("pop","PhoneActivity");
         setContentView(R.layout.activity_phone);
+        Log.d("pop","PhoneActivity");
+        phoneLinear=findViewById(R.id.phone_extra_layout);
+        codeLinear=findViewById(R.id.phone_layout);
+        progressBar = findViewById(R.id.progress);
+
         phoneEdit = findViewById(R.id.phone_edit);
         phoneBtn = findViewById(R.id.phone_btn);
         editCode = findViewById(R.id.codeEdit);
@@ -61,6 +67,7 @@ public class PhoneActivity extends AppCompatActivity {
                 Log.d("pop","onCodeSent");
                 sentCode = s;
                 token = forceResendingToken;
+                progressBar.setVisibility(View.GONE);
             }
         };
     }
@@ -101,9 +108,16 @@ public class PhoneActivity extends AppCompatActivity {
                 TimeUnit.SECONDS,
                 this,
                 callbacks);
+
+        phoneLinear.setVisibility(View.GONE);
+        codeLinear.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
+
+
     }
 
     public void onConfirm(View view) {
         verifySignInCode();
+
     }
 }

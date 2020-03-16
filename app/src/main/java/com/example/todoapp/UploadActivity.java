@@ -30,7 +30,6 @@ import static com.google.firebase.database.FirebaseDatabase.*;
 
 public class UploadActivity extends AppCompatActivity {
     ImageView image;
-    EditText fileName;
     Button save;
     SharedPreferences preferences;
     private Uri imageUri;
@@ -42,7 +41,6 @@ public class UploadActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload);
         image = findViewById(R.id.image_item);
-        fileName = findViewById(R.id.edit_fileName);
         save = findViewById(R.id.save_btn);
         preferences = getPreferences(MODE_PRIVATE);
         storageReference = FirebaseStorage.getInstance().getReference();
